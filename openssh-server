@@ -18,3 +18,15 @@ sudo systemctl start ssh
 (Opcionális) Engedélyezd az SSH-t induláskor:
 
 sudo systemctl enable ssh
+
+# Belépés
+
+ssh felhasználónév@ip-cím
+
+Ha nem tudod az IP címet, a szerveren futtasd:
+hostname -I
+
+🔒 Tipp: Tűzfal beállítás (ha aktív az UFW)
+Ha használod az Ubuntu beépített tűzfalát (UFW), engedélyezd az SSH-t:
+
+sudo ufw allow ssh
