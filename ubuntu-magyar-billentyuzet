@@ -1,0 +1,12 @@
+# 🇭🇺 Magyar billentyűzet beállítása
+
+sudo dpkg-reconfigure keyboard-configuration
+Ez egy interaktív beállító varázslót indít, ahol kiválaszthatod:
+
+Billentyűzet típusa (pl. Generic 105-key PC)
+
+Nyelv: válaszd a Hungarian opciót
+
+Kiosztás: általában a „default” magyar kiosztás jó lesz
+
+sudo systemctl restart keyboard-setup
