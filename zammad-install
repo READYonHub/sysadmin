@@ -1,0 +1,44 @@
+# update software repositories
+sudo apt update
+# install available software updates
+sudo apt upgrade
+# install prerequisite packages
+sudo apt install curl wget apt-transport-https gnupg -y
+# add elasticsearch gpg key
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+# add zammad gpg key
+curl -fsSL https://dl.packager.io/srv/zammad/zammad/key | gpg --dearmor | sudo tee /etc/apt/keyrings/zammad.gpg> /dev/null
+# add elasticsearch apt repository
+echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
+# add zammad apt repository
+echo "deb [signed-by=/etc/apt/keyrings/zammad.gpg] https://dl.packager.io/srv/deb/zammad/zammad/stable/debian 12 main"| sudo tee /etc/apt/sources.list.d/zammad.list
+# update software repositories
+sudo apt update
+# list installed languages
+locale | grep "LANG="
+# if not listed in the above output
+# install en_US.UTF-8 and set as default locale
+sudo apt install locales -y && sudo locale-gen en_US.UTF-8 && echo "LANG=en_US.UTF-8" > sudo /etc/default/locale
+# install supporting packages
+sudo apt install libimlib2 elasticsearch postgresql postgresql-common redis-server nginx nodejs -y
+# start and enable services
+sudo systemctl enable postgresql --now && sudo systemctl enable redis-server --now && sudo systemctl enable nginx --now && sudo systemctl enable elasticsearch --now
+# update postgres max connections to 2000
+sudo sed -i 's/max_connections = 100/max_connections = 2000/' /etc/postgresql/*/main/postgresql.conf
+# restart postgres service
+sudo systemctl restart postgresql
+# install ingest-attachment for elasticsearch
+sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
+# restart elasticsearch service
+sudo systemctl restart elasticsearch
+# install zammad
+sudo apt install zammad -y
+# configure elasticsearch url
+sudo zammad run rails r "Setting.set('es_url', 'http://localhost:9200')"
+# rebuild elasticsearch search index
+sudo zammad run rake zammad:searchindex:rebuild
+# update server name in nginx config
+# replace <% SERVER DNS NAME %> before executing
+sudo sed -i 's/server_name localhost;/server_name <% SERVER DNS NAME %>;/' /etc/nginx/sites-available/zammad.conf
+# restart nginx service
+sudo systemctl restart nginx
