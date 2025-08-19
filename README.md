@@ -1,3 +1,21 @@
+# Kell
+
+* fog doku
+* fájl szerver install + alap konfig
+* nyomtatós szerver
+
+
+
+
+
+
+
+
+
+
+
+
+
 # sysadmin
 
 ## Tárhely felszabadítás
