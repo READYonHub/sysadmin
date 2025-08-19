@@ -1,0 +1,20 @@
+🔧 SSH telepítése Ubuntu szerveren
+Frissítsd a csomaglistát:
+
+sudo apt update
+
+Telepítsd az OpenSSH szervert:
+
+sudo apt install openssh-server
+
+Ellenőrizd, hogy fut-e az SSH szolgáltatás:
+
+sudo systemctl status ssh
+
+Ha azt látod, hogy „active (running)”, akkor minden rendben. Ha nem, akkor indítsd el:
+
+sudo systemctl start ssh
+
+(Opcionális) Engedélyezd az SSH-t induláskor:
+
+sudo systemctl enable ssh
