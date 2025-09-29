@@ -1,0 +1,7 @@
+# Ha pl. parancssorban gyakran használnám a Notepad++-t akkor csak változóban/aliaszba el kell mentenem a forásprogramot
+
+PS D:\code2\rn-shop> Set-Alias np "C:\Program Files\Notepad++\notepad++.exe"
+
+# megnyitás 
+
+PS D:\code2\rn-shop> np .\README.md
